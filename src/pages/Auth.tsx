@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Auth = () => {
   return (
-    <div className="flex justify-center items-center w-full mt-12 md:m-10">
+    <div className="flex justify-center items-center w-full mt-12">
       <Tabs defaultValue="login" className="md:w-[400px] ">
         <TabsList>
           <TabsTrigger value="register">Register</TabsTrigger>

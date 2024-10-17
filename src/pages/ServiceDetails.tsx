@@ -48,7 +48,7 @@ const {id} = useParams()
               >
                 Book
               </DialogTrigger>
-              <DialogContent className="bg-primarygrey h-[95dvh]">
+              <DialogContent className="bg-primarygrey ">
                 <DialogHeader>
                   <DialogTitle>Book your service now</DialogTitle>
                   <DialogDescription></DialogDescription>

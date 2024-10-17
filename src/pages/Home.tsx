@@ -8,7 +8,7 @@ import ServiceCard from "@/components/ServiceCard";
 const Home = () => {
   return (
     <>
-      <section>
+      <section className="mb-4">
         <div className="relative overflow-hidden mb-3">
           <AspectRatio ratio={16 / 9}>
             <img
@@ -55,9 +55,9 @@ const Home = () => {
        <ServiceCard/>
         </div>
       </section>
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center mb-5">
      <Link to={"/services"}>
-     <Button size={"lg"} variant={"secondary"} className="p-5 font-semibold">Browse All Services  <FaLongArrowAltRight className="ml-2 text-xl"/></Button>
+     <Button size={"lg"} variant={"secondary"} className="p-5 font-semibold mb-5">Browse All Services  <FaLongArrowAltRight className="ml-2 text-xl"/></Button>
      </Link>
     </div>
     </>
