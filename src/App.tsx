@@ -9,6 +9,7 @@ import UserDashboard from "./pages/UserDashboard";
 import ProfileForm from "./pages/ProfileForm";
 import PublicLayout from "./components/PublicLayout";
 import AuthenticatedLayout from "./components/AuthenticatedLayout";
+import VerifyEmail from "./pages/VerifyEmail";
 
 
 export default function App() {
@@ -19,7 +20,9 @@ export default function App() {
       <Route element={<PublicLayout/>}>
       <Route path="/" element={<Home/>}/>
       <Route path="/auth" element={<Auth/>}/>
+      <Route path="/verify-email" element={<VerifyEmail/>}/>
       </Route>
+
       <Route element={<AuthenticatedLayout/>}>
       <Route path="/services" element={<Services/>}/>
       <Route path="/services/:type" element={<ServiceProviders/>}/>

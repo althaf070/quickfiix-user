@@ -12,7 +12,7 @@ const ServiceProviders = () => {
   <ServiceCarousel type={type}/>
     <section id={`#${type}`} className="m-6">
       <h1 className="text-center text-3xl font-bold capitalize">{type} Service Providers</h1>
-      <div className="grid md:grid-cols-4 sm:grid-cols-2 place-items-center gap-4 m-3">
+      <div className="grid md:grid-cols-5 sm:grid-cols-2 place-items-center gap-4 m-3">
       <ProviderCard/>
       <ProviderCard/>
       <ProviderCard/>
