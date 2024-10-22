@@ -67,7 +67,7 @@ const ServiceDetails = () => {
                 <ServiceBookingForm closeDialog={closeDialog} />
               </DialogContent>
             </Dialog>
-            <Button className="ml-4 bg-destructive hover:bg-darkOlive" size={"icon"} cl><GiSelfLove/></Button>
+            <Button className="ml-4 bg-destructive hover:bg-darkOlive" size={"icon"}><GiSelfLove/></Button>
           </CardFooter>
         </Card>
       </div>
@@ -113,7 +113,6 @@ const ServiceDetails = () => {
         <h1 className="text-4xl">Ratings & Reviews</h1>
         <h1 className="text-lg">Total Ratings</h1>
         <h1 className="text-lg">Average Ratings</h1>
-        <h3>Reviews</h3>
       </div>
       <div className="col-span-2"></div>
     </div>

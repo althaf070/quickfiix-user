@@ -102,12 +102,3 @@ body {
 .animate-slideDown {
   animation: slideDown 0.5s forwards; /* Duration of 500ms */
 }
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}

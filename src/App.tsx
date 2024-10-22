@@ -15,7 +15,6 @@ import VerifyEmail from "./pages/VerifyEmail";
 export default function App() {
   return (
  <>
- 
     <Routes>
       <Route element={<PublicLayout/>}>
       <Route path="/" element={<Home/>}/>
