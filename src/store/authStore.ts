@@ -1,9 +1,8 @@
 import { create } from "zustand";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 // Define types for your user and store state
 interface User {
-  // Define user properties based on your user model
   username: string;
   email: string;
   // Add other user properties as needed
@@ -49,11 +48,15 @@ export const useAuthStore = create<AuthStore>((set) => ({
         isAuthenticated: true,
         isLoading: false,
       });
-    } catch (error: unknown) {
+    } catch (err: unknown) {
+      const error = err as AxiosError;
+
+      // Ensure error message is a string
       set({
-        error: error.response?.data.message || "Error signing up",
+        error: (error.response?.data as string) || "Error signing up",
         isLoading: false,
       });
+
       throw error; // Optional, depending on your error handling strategy
     }
   },

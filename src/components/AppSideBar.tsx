@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, Home, Inbox, Settings } from "lucide-react"
  
 import {
   Sidebar,
@@ -12,6 +12,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Button } from "./ui/button"
+import { GiRoyalLove } from "react-icons/gi"
+import { MdDashboard } from "react-icons/md"
  
 // Menu items.
 const items = [
@@ -21,8 +23,13 @@ const items = [
     icon: Home,
   },
   {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: MdDashboard,
+  },
+  {
     title: "Inbox",
-    url: "/",
+    url: "/messages",
     icon: Inbox,
   },
   {
@@ -31,13 +38,14 @@ const items = [
     icon: Calendar,
   },
   {
-    title: "Search",
-    url: "/",
-    icon: Search,
+    title: "Favourites",
+    url: "/favourites",
+    icon: GiRoyalLove,
   },
+
   {
     title: "Settings",
-    url: "/",
+    url: "/settings",
     icon: Settings,
   },
 ]

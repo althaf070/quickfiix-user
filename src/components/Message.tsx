@@ -60,18 +60,7 @@ const MessageComponent = () => {
           <div className="self-start bg-vibrantPurple p-2 rounded-lg max-w-[70%]">
             Receiver message
           </div>
-          <div className="self-start bg-vibrantPurple p-2 rounded-lg max-w-[70%]">
-            Receiver message
-          </div>
-          <div className="self-start bg-vibrantPurple p-2 rounded-lg max-w-[70%]">
-            Receiver message
-          </div>
-          <div className="self-start bg-vibrantPurple p-2 rounded-lg max-w-[70%]">
-            Receiver message
-          </div>
-          <div className="self-start bg-vibrantPurple p-2 rounded-lg max-w-[70%]">
-            Receiver message
-          </div>
+       
         </div>
       </div>
       <div className="flex p-4 border-t">
