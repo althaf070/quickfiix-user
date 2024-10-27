@@ -14,12 +14,7 @@ import { MdStarRate } from "react-icons/md";
 import Message from "@/components/Message";
 import { Button } from "@/components/ui/button";
 import Reviews from "@/components/Reviews";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel"
-import ProviderCard from "@/components/ProviderCard";
+
 import { GiSelfLove } from "react-icons/gi";
 
 const ServiceDetails = () => {
@@ -32,7 +27,7 @@ const ServiceDetails = () => {
   };
 
   return (
-    <>    <div className="grid ml-4 md:grid-cols-12 my-10">
+    <>    <div className="grid ml-4 md:grid-cols-12 my-10 overflow-hidden">
       <div className="col-span-2">
       </div>
       <div className="col-span-4">
@@ -159,38 +154,14 @@ const ServiceDetails = () => {
     View More Reviews
   </Button>
   {reviewFeild && (
-    <div className="mt-4 h-72 bg-primarygrey w-[40%] rounded-lg shadow-lg mx-auto flex flex-col transform transition-all duration-900 ease-in-out translate-y-0 opacity-100 animate-slideDown">
+    <div className="mt-4 h-72 bg-primarygrey md:w-[40%] rounded-lg shadow-lg mx-auto flex flex-col transform transition-all duration-900 ease-in-out translate-y-0 opacity-100 animate-slideDown">
    <Reviews/>
     </div>
   )}
 </div>
 {/* other similiar provider  */}
-<h1 className="text-3xl font-semibold text-center mt-4">Other Simialer Service Providers</h1>
-<Carousel className="m-5 place-items-center">
-  <CarouselContent>
-    <CarouselItem className="md:basis-1/2 lg:basis-1/5">
-    <ProviderCard/>
-    </CarouselItem>
-    <CarouselItem className="md:basis-1/2 lg:basis-1/5">
-    <ProviderCard/>
-    </CarouselItem>
-    <CarouselItem className="md:basis-1/2 lg:basis-1/5">
-    <ProviderCard/>
-    </CarouselItem>
-    <CarouselItem className="md:basis-1/2 lg:basis-1/5">
-    <ProviderCard/>
-    </CarouselItem>
-    <CarouselItem className="md:basis-1/2 lg:basis-1/5">
-    <ProviderCard/>
-    </CarouselItem>
-    <CarouselItem className="md:basis-1/2 lg:basis-1/5">
-    <ProviderCard/>
-    </CarouselItem>
-    <CarouselItem className="md:basis-1/2 lg:basis-1/5">
-    <ProviderCard/>
-    </CarouselItem>
-  </CarouselContent>
-</Carousel>
+<h1 className="text-3xl font-semibold text-center mt-4">Other Simialer Service Providers section</h1>
+
 
 
     </>

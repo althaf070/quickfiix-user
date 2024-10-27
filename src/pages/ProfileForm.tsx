@@ -1,4 +1,3 @@
-import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -15,89 +14,58 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { Textarea } from "@/components/ui/textarea";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { SERVER_URL } from "@/lib/serverurl";
+import { getUserIdFromToken } from "@/lib/getUserToken";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
+import { keralaDistricts } from "@/lib/constants";
 
 const formSchema = z.object({
-  username: z.string(),
-  email: z.string().email(),
-  Phno: z.string(),
-  address: z.string()
+  address: z.string().min(5),
+  district:z.string(),
+  phoneNumber: z.string().min(10),
 });
 
 const ProfileForm = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema)
+    resolver: zodResolver(formSchema),
+    defaultValues:{
+      address:"",
+      district:"",
+      phoneNumber:"",
+    }
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+ async function onSubmit(values: z.infer<typeof formSchema>) {
+
+  const {address,district,phoneNumber} = values
+  const userId = getUserIdFromToken(); 
     try {
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
-      navigate('/auth')
+      const response = await axios.put(`${SERVER_URL}/auth/complete-profile`,{address,district,phoneNumber,userId})
+      console.log(response);
+      
+      navigate("/services");
     } catch (error) {
       console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
     }
   }
   return (
-    <div>
-        <h1 className="text-center text-4xl ">Complete  Your Profile Setup</h1>
-        
+    <div className="bg-primarydarkgrey flex flex-col justify-center items-center h-screen">
+      <h1 className="text-center text-4xl ">Complete Your Profile Setup</h1>
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 max-w-3xl mx-auto py-10"
+          className="space-y-8 max-w-3xl w-[90%] md:w-[450px] p-9 rounded-lg shadow-2xl bg-primarygrey"
         >
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>User Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter username" {...field} />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Placeholder" {...field} />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="Phno"
-            render={({ field }) => (
-              <FormItem className="flex flex-col items-start">
-                <FormLabel>Phone No</FormLabel>
-                <FormControl className="w-full">
-                  <Input placeholder="Enter your phone number" {...field} />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="address"
@@ -106,8 +74,9 @@ const ProfileForm = () => {
                 <FormLabel>Address</FormLabel>
                 <FormControl>
                   <Textarea
+                  required
                     placeholder="Enter your address"
-                    className="resize-none"
+                    className="resize-none text-primarycharacoal"
                     {...field}
                   />
                 </FormControl>
@@ -116,10 +85,46 @@ const ProfileForm = () => {
               </FormItem>
             )}
           />
+         <FormField
+          control={form.control}
+          name="district"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Location</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose your service location" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {keralaDistricts.map(item => (
+                    <SelectItem value={item} className="capitalize">{item}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+          <FormField
+            control={form.control}
+            name="phoneNumber"
+            render={({ field }) => (
+              <FormItem className="flex flex-col items-start">
+                <FormLabel>Phone No</FormLabel>
+                <FormControl className="w-full">
+                  <Input placeholder="Enter your phone number" {...field} className=" text-primarycharacoal" required/>
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <Button type="submit">Submit</Button>
         </form>
       </Form>
-      <Link to='/services'><Button>Skip Fore now</Button></Link>
     </div>
   );
 };

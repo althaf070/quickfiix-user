@@ -5,92 +5,57 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 import { Loader } from "lucide-react";
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters."
-  }),
+
+const loginSchema = z.object({
   email: z.string().email(),
   password: z
     .string()
     .min(5, {
-      message: "Password must be at least 5 characters"
+      message: "Password must be at least 5 characters",
     })
     .max(15, {
-      message: "Maximum length of password is 15 characters"
-    })
+      message: "Maximum length of password is 15 characters",
+    }),
 });
 
-type FormValues = z.infer<typeof formSchema>;
+type LoginValues = z.infer<typeof loginSchema>;
 
-interface RegisterProps {
-  isRegister?: boolean;
-}
-
-const Register = ({ isRegister }: RegisterProps) => {
-  const { signup, error, isLoading } = useAuthStore();
+const Login = () => {
+  const { login, error, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginValues>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
       email: "",
-      password: ""
-    }
+      password: "",
+    },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = async (values) => {
-    const { username, email, password } = values;
-    console.log(username, email, password);
-    
-    if (isRegister) {
-      try {
-        await signup(username,email,password);
-        console.log("Signup successful", values);
-        navigate('/verify-email'); // Redirect to dashboard or desired route after successful registration
-      } catch (err) {
-        console.error("Signup failed", err); // This will now include the improved error logging
-      }
+  const onSubmit: SubmitHandler<LoginValues> = async (values) => {
+    const { email, password } = values;
+    try {
+      await login(email, password);
+      navigate("/services");
+    } catch (err) {
+      console.error("Login failed", err);
     }
   };
-  
+
   return (
-    <section>
+    <section className="bg-primarydarkgrey flex flex-col justify-center items-center h-screen">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {isRegister && (
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter Your User Name"
-                      {...field}
-                      className="text-darkOlive"
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[90%] md:w-[450px] p-9 rounded-lg shadow-2xl bg-primarygrey">
           <FormField
             control={form.control}
             name="email"
@@ -133,16 +98,16 @@ const Register = ({ isRegister }: RegisterProps) => {
           <Button type="submit" variant={"login"} disabled={isLoading}>
             {isLoading ? (
               <Loader className="animate-spin mx-auto" size={24} />
-            ) : isRegister ? (
-              "Register"
             ) : (
               "Login"
             )}
           </Button>
         </form>
       </Form>
+      <p className="text-base text-silver">Don't have account...? <span className="text-accent underline ml-2 text-darkOlive"> <Link to={"/register"}>Register Now</Link></span></p>
+     
     </section>
   );
 };
 
-export default Register;
+export default Login;

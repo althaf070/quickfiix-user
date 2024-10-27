@@ -14,6 +14,8 @@ import {
 import { Button } from "./ui/button"
 import { GiRoyalLove } from "react-icons/gi"
 import { MdDashboard } from "react-icons/md"
+import { useAuthStore } from "@/store/authStore"
+
  
 // Menu items.
 const items = [
@@ -50,6 +52,10 @@ const items = [
   },
 ]
 const AppSideBar = () => {
+const {logout} = useAuthStore()
+const handleLogout = () => {
+  logout();
+}
   return (
     <Sidebar>
     <SidebarContent className="bg-primarygrey text-offwhite">
@@ -72,7 +78,7 @@ const AppSideBar = () => {
       </SidebarGroup>
     </SidebarContent>
     <SidebarFooter className="bg-primarydarkgrey">
-        <Button variant={"destructive"}>Logout</Button>
+        <Button variant={"destructive"} onClick={handleLogout}>Logout</Button>
     </SidebarFooter>
   </Sidebar>
   )

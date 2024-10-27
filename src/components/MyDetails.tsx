@@ -1,12 +1,24 @@
 
+import { formatDate, formatDatetime } from "@/lib/date";
+import { useAuthStore } from "@/store/authStore"
 
 const MyDetails = () => {
+  const {user} = useAuthStore()
+
+
   return (
-    <div className="p-4 bg-primarydarkgrey rounded-md shadow-xl">
-        <h1 className="text-4xl font-bold">My name</h1>
-        <div className="text-silver font-xl font-semibold">
-            <p>Mobile no</p>
+    <div className="p-4 bg-primarydarkgrey rounded-md shadow-xl md:flex justify-around">
+        <div className="">
+        <h1 className="text-3xl font-semibold text-silver">Profile</h1>
+        <h1 className="text-2xl font-semibold capitalize">{user?.username}</h1>
+            <p >Email:{user?.email}</p>
+            <p>phno</p>
             <p>address</p>
+        </div>
+        <div>
+          <h1 className="text-2xl font-semibold text-silver">Account Activity</h1>
+          <p>Joined Date:{formatDate(user?.createdAt)}</p>
+          <p>Last login {formatDatetime(user?.lastlogin)}</p>
         </div>
     </div>
   )

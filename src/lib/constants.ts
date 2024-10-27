@@ -55,3 +55,20 @@ import { GiLargePaintBrush } from "react-icons/gi"
     }
   };
   
+
+  export const keralaDistricts = [
+    "alappuzha",
+    "ernakulam",
+    "idukki",
+    "kannur",
+    "kasaragod",
+    "kollam",
+    "kottayam",
+    "kozhikode",
+    "malappuram",
+    "palakkad",
+    "pathanamthitta",
+    "thiruvananthapuram",
+    "thrissur",
+    "wayanad"
+  ];

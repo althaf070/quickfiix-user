@@ -10,8 +10,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { useAuthStore } from "@/store/authStore";
 
 const Header = () => {
+  const {isAuthenticated,logout} = useAuthStore()
+  const handleLogout=()=> {
+    logout();
+  }
   return (
     <>
       <nav className="flex justify-between w-full h-[80px] p-4 bg-primarydarkgrey ">
@@ -35,15 +40,17 @@ const Header = () => {
           </ul>
         </div>
         <div className="mr-6 flex gap-5">
-          <Link to={"/auth"}>
-            <Button
-              variant={"login"}
-              className="hidden md:block text-md fonbt-semibold"
-            >
-              Sign in
-            </Button>
-          </Link>
-
+         {isAuthenticated ? <Button variant={"destructive"} onClick={handleLogout}>Logout</Button> :(
+          <> <Link to={"/login"}>
+          <Button
+            variant={"login"}
+            className="hidden md:block text-md fonbt-semibold"
+          >
+            Sign in
+          </Button>
+        </Link>
+</>
+         )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button className="md:hidden" variant={"secondary"} size={"icon"}>
@@ -66,9 +73,9 @@ const Header = () => {
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link to={"/auth"}>
+                <Link to={"/login"}>
                   <Button variant={"login"} className="text-md fonbt-semibold">
-                    Sign in
+                    Login
                   </Button>
                 </Link>
               </DropdownMenuItem>

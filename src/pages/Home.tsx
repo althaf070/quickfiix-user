@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { FaLongArrowAltDown, FaLongArrowAltRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ServiceCard from "@/components/ServiceCard";
+import { useAuthStore } from "@/store/authStore";
 
 const Home = () => {
+  const {isAuthenticated} = useAuthStore()
   return (
     <>
       <section className="mb-4">
@@ -28,8 +30,8 @@ const Home = () => {
             </div>
 
             <div className="mt-3 ml-5">
-              <Link to={"/auth"}>
-                {" "}
+              {!isAuthenticated && (
+                <Link to={"/login"}>
                 <Button
                   size={"lg"}
                   variant={"login"}
@@ -38,6 +40,7 @@ const Home = () => {
                   SignIn <FaLongArrowAltRight className="ml-2 text-xl" />
                 </Button>
               </Link>
+              )}
 
               <Button className="ml-3 mt-4 p-4 font-semibold">
                 <a href="#services">Explore Our Services</a>{" "}
