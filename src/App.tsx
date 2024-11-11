@@ -9,7 +9,6 @@ import AuthenticatedLayout from "./components/AuthenticatedLayout";
 import MessagePage from "./pages/MessagePage";
 import UserDashboard from "./components/DashboardLayout";
 import { Dashboard } from "./pages/DashboardPage";
-import Favourites from "./pages/Favourites";
 import Settings from "./pages/Settings";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -39,7 +38,6 @@ export default function App() {
       <Route path="/appointments" element={<Appointments/>}/>
       <Route path="/messages" element={<MessagePage/>}/>
       <Route path="/reviews" element={<MyReviewPage/>}/>
-      <Route path="/favourites" element={<Favourites/>}/>
       <Route path="/settings" element={<Settings/>}/>
       </Route>
       </Route>

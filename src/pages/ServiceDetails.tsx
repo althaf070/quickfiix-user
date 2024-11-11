@@ -19,10 +19,7 @@ import ServiceBookingForm from "@/components/ServiceBooking";
 import { MdStarRate } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import Reviews from "@/components/Reviews";
-
-import { GiSelfLove } from "react-icons/gi";
 import { Link, useParams } from "react-router-dom";
-import { Services, useServiceStore } from "@/store/serviceStore";
 import { IMG_SERVER_URL } from "@/lib/serverurl";
 import { ArrowLeftCircle } from "lucide-react";
 import { useReviewStore } from "@/store/reviewStore";
@@ -106,7 +103,7 @@ const ServiceDetails = () => {
                 className="ml-4 bg-destructive hover:bg-darkOlive"
                 size={"icon"}
               >
-                <GiSelfLove />
+                
               </Button>
             </CardFooter>
           </Card>
