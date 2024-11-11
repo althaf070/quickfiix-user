@@ -13,7 +13,7 @@ const Services = () => {
       <h1 className="text-4xl lg:text-6xl text-silver font-semibold text-center ">What Service You Need Today..?</h1>
      <ServiceCarousel/>
      <div className="grid md:grid-cols-5 sm:grid-cols-2 place-items-center gap-4 m-3">
-     {services.length > 0 ? services.map((service)=> (
+     {services?.length > 0 ? services.map((service)=> (
        <ProviderCard service={service} key={service._id}/>
      )):<p>No Service Found</p>}
      
