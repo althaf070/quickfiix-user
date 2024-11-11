@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Settings } from "lucide-react"
+import { Calendar, Home, Inbox, Settings,MessageSquareQuote } from "lucide-react"
  
 import {
   Sidebar,
@@ -21,7 +21,7 @@ import { useAuthStore } from "@/store/authStore"
 const items = [
   {
     title: "Home",
-    url: "/",
+    url: "/services",
     icon: Home,
   },
   {
@@ -40,9 +40,14 @@ const items = [
     icon: Calendar,
   },
   {
-    title: "Favourites",
-    url: "/favourites",
+    title: "Used Services",
+    url: "/used-services",
     icon: GiRoyalLove,
+  },
+  {
+    title: "Reviews",
+    url: "/reviews",
+    icon: MessageSquareQuote,
   },
 
   {

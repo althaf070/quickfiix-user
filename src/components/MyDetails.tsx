@@ -12,8 +12,9 @@ const MyDetails = () => {
         <h1 className="text-3xl font-semibold text-silver">Profile</h1>
         <h1 className="text-2xl font-semibold capitalize">{user?.username}</h1>
             <p >Email:{user?.email}</p>
-            <p>phno</p>
-            <p>address</p>
+            <p>Phone Number: {user?.phoneNumber}</p>
+            <p>Address :{user?.address}</p>
+            <p>Location :{user?.district}</p>
         </div>
         <div>
           <h1 className="text-2xl font-semibold text-silver">Account Activity</h1>

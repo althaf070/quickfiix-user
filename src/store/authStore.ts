@@ -1,15 +1,27 @@
 import { create } from "zustand";
 import axios, { AxiosError } from "axios";
 import { SERVER_URL } from "@/lib/serverurl";
+import { Services } from "@/lib/types";
 
 axios.defaults.withCredentials=true
 
 // Define types for your user and store state
+interface Review {
+  _id: string;
+  rating: number;
+  feedback: string;
+}
+
 interface User {
   _id: string
   username: string;
   email: string;
   lastlogin:string;
+  phoneNumber:string
+  district:string
+  address:string
+  usedServices: Services[];
+  reviews?: Review[];
   createdAt:string
 }
 

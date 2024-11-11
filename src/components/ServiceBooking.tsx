@@ -21,12 +21,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 import DatePicker from "@/components/ui/datepicker"; 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useBookingStore } from "@/store/bookingsStore";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
-  date: z.date(),
-  message: z.string(),
-  payment: z.string()
+  appointmentDate: z.date(),
+  notes: z.string(),
+  payment: z.string(),
 });
 
 interface BookingProps {
@@ -34,28 +36,26 @@ interface BookingProps {
 }
 
 export default function ServiceBookingForm({ closeDialog }: BookingProps) {
-
+const {createAppointment,error,isLoading} =useBookingStore()
+const {id}=useParams()
   const navigate= useNavigate()
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema)
+    resolver: zodResolver(formSchema),
+    defaultValues:{
+      appointmentDate: new Date(),
+      notes: '',
+      payment:''
+    }
   });
 
-
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const {appointmentDate,notes,payment}=values
     try {
-      const formData = new FormData();
-      formData.append("date", values.date.toLocaleDateString())
-      formData.append("message", values.message);
-      formData.append("payment", values.payment);
-
-
-      console.log(values, "values");
-      console.log(formData.get("img"));
-      console.log("submitted");
-
-      closeDialog();
-      navigate('/appointments')
+      if(id){
+        await createAppointment(id,appointmentDate,notes,payment)
+          closeDialog();
+          navigate('/appointments')
+      }
     } catch (error) {
       console.error("Form submission error", error);
     }
@@ -70,10 +70,9 @@ export default function ServiceBookingForm({ closeDialog }: BookingProps) {
         {/* Date Field */}
         <FormField
           control={form.control}
-          name="date"
+          name="appointmentDate"
           render={({ field }) => (
             <FormItem>
-              {/* <FormLabel className="mr-2">Select Your Preferred Date</FormLabel> */}
               <FormControl>
                 <DatePicker
                   value={field.value}
@@ -87,7 +86,7 @@ export default function ServiceBookingForm({ closeDialog }: BookingProps) {
 
         <FormField
           control={form.control}
-          name="message"
+          name="notes"
           render={({ field }) => (
             <FormItem>
               <FormLabel>What services are you expecting from us?</FormLabel>
@@ -118,17 +117,16 @@ export default function ServiceBookingForm({ closeDialog }: BookingProps) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="cod">Cash on delivery</SelectItem>
-                  <SelectItem value="credit Card">Credit Card</SelectItem>
-                  <SelectItem value="paypal">Paypal</SelectItem>
+                  <SelectItem value="cash">Cash on delivery</SelectItem>
+                  <SelectItem value="online">Online</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
             </FormItem>
           )}
         />
-
-        <Button type="submit">Submit</Button>
+{error && <p>{error}</p>}
+        <Button type="submit" disabled={isLoading}>{isLoading ? <Loader2 className="animate-spin" size={24}/>:"Submit"}</Button>
       </form>
     </Form>
   );

@@ -14,6 +14,14 @@ import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 import { Loader } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
+import { keralaDistricts } from "@/lib/constants";
 
 const registerSchema = z.object({
   username: z.string().min(2, {
@@ -62,7 +70,7 @@ const Register = () => {
   return (
     <section className="bg-primarydarkgrey flex flex-col justify-center items-center h-screen">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[90%] md:w-[450px] p-9 rounded-lg shadow-2xl bg-primarygrey">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[90%] md:w-[450px] p-1 px-5 rounded-lg shadow-2xl bg-primarygrey">
           
           <FormField
             control={form.control}
@@ -112,9 +120,18 @@ const Register = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>District</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <Input placeholder="Enter Your District" {...field} className="text-darkOlive" />
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose your service location" />
+                  </SelectTrigger>
                 </FormControl>
+                <SelectContent>
+                  {keralaDistricts.map(item => (
+                    <SelectItem key={item} value={item} className="capitalize">{item}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
                 <FormMessage />
               </FormItem>
             )}

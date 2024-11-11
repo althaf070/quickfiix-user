@@ -1,3 +1,5 @@
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -7,86 +9,111 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
- 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-]
+} from "@/components/ui/table";
+import { formatDate } from "@/lib/date";
+import { useBookingStore } from "@/store/bookingsStore";
+import { Trash } from "lucide-react";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
+const statusColors = {
+  pending: "bg-[#FEF3C7] text-[#92400E]",       // Yellow
+  confirmed: "bg-[#DBEAFE] text-[#1D4ED8]",     // Blue
+  completed: "bg-[#D1FAE5] text-[#065F46]",     // Green
+  canceled: "bg-[#FECACA] text-[#991B1B]",      // Red
+  paid: "bg-[#88D66C] text-[#6D28D9]",          // Purple
+};
 
 const Appointments = () => {
+  const { getuserAppointment, bookings, deleteAppointment } = useBookingStore();
+
+  const handleDelete = async (aid: string) => {
+    try {
+      await deleteAppointment(aid);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getuserAppointment();
+  }, [getuserAppointment]);
+
+  if (bookings.length === 0) {
+    return (
+      <div className="flex min-h-screen justify-center items-center">
+        <h1 className="text-4xl lg:text-6xl font-semibold">
+          No Appointments booked till now
+        </h1>
+      </div>
+    );
+  }
+// sort table
+  const sortedBookings = Array.isArray(bookings)
+  ? bookings.slice().sort((a, b) => {
+      if (a.status === "paid") return 1;
+      if (b.status === "paid") return -1;
+      return 0;
+    })
+  : [];
+
+
   return (
     <div className="mx-7 p-2 mt-5">
-    <Table className="border">
-    <TableCaption>A list of your recent Appointments.</TableCaption>
-    <TableHeader>
-      <TableRow>
-        <TableHead className="w-[100px]">Invoice</TableHead>
-        <TableHead>Status</TableHead>
-        <TableHead>Method</TableHead>
-        <TableHead className="text-right">Amount</TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {invoices.map((invoice) => (
-        <TableRow key={invoice.invoice}>
-          <TableCell className="font-medium">{invoice.invoice}</TableCell>
-          <TableCell>{invoice.paymentStatus}</TableCell>
-          <TableCell>{invoice.paymentMethod}</TableCell>
-          <TableCell className="text-right">{invoice.totalAmount}</TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-    <TableFooter>
-      <TableRow>
-        <TableCell colSpan={3}>Total</TableCell>
-        <TableCell className="text-right">$2,500.00</TableCell>
-      </TableRow>
-    </TableFooter>
-  </Table>
-  </div>
-  )
-}
+      <Table className="border">
+        <TableCaption>A list of your recent Appointments.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Service</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Scheduled Date</TableHead>
+            <TableHead>Booked Date</TableHead>
+            <TableHead>Method</TableHead>
+            <TableHead>Amount/hr</TableHead>
+            <TableHead className="text-right">Action</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sortedBookings?.map((booking) => (
+            <TableRow key={booking?._id}>
+              <TableCell className="font-medium capitalize underline">
+               <Link to={`/servicedetails/${booking.service?._id}`}>{booking?.service?.servicename}</Link>
+              </TableCell>
+              <TableCell>
+                <Badge
+                  className={`px-2 py-1 rounded ${statusColors[booking?.status]}`}
+                  variant={"outline"}
+                >
+                  {booking?.status}
+                </Badge>
+              </TableCell>
+              <TableCell>{formatDate(booking?.appointmentDate)}</TableCell>
+              <TableCell>{formatDate(booking?.bookingDate)}</TableCell>
+              <TableCell>{booking?.payment}</TableCell>
+              <TableCell>₹{booking.service?.price}</TableCell>
+              <TableCell className="text-right">
+                {booking.status == 'completed' && booking.payment == "online"&& <Button>Pay Now</Button>}
+                {booking.status == "pending" && (
+                  <Button
+                    variant={"destructive"}
+                    onClick={() => handleDelete(booking?._id)}
+                  >
+                   <Trash/> Cancel
+                  </Button>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3}>Total services booked currently</TableCell>
+            <TableCell className="text-right">{bookings.length}</TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </div>
+  );
+};
 
-export default Appointments
+export default Appointments;

@@ -9,7 +9,7 @@ const AuthenticatedLayout = () => {
   const { checkAuth, isAuthenticated,isCheckingAuth } = useAuthStore(); 
 
   useEffect(() => {
-    // to check logeed in or not
+    // to check loged in or not
     checkAuth();
   }, [checkAuth]);
 
@@ -20,7 +20,7 @@ const AuthenticatedLayout = () => {
     </div>; 
   }
 
-  // Redirect to login if not authenticated after the check
+  // redirect to login if not authenticated after the check
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
