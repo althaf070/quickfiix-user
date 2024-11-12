@@ -100,12 +100,12 @@ const ServiceDetails = () => {
                   <ServiceBookingForm closeDialog={closeDialog}/>
                 </DialogContent>
               </Dialog>
-              <Button
+              {/* <Button
                 className="ml-4 bg-destructive hover:bg-darkOlive"
                 size={"icon"}
               >
                 
-              </Button>
+              </Button> */}
             </CardFooter>
           </Card>
         </div>
