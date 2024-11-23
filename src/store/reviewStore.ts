@@ -1,5 +1,6 @@
 import { SERVER_URL } from "@/lib/serverurl";
 import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 import { create } from "zustand";
 
 interface Reviews {
@@ -47,6 +48,7 @@ async createReview(providerId,serviceId, rating, feedback) {
             providerId,serviceId,rating,feedback
         })
         set({isLoading:false,reviews:response.data.review})
+        toast.success(response.data.message)
     } catch (err) {
         const error = err as AxiosError<ErrorResponseData>;
         set({
@@ -105,6 +107,7 @@ async editReview(id,feedback,rating) {
             feedback,rating
         })
       set({isLoading:false,reviews:response.data.reviews})
+      toast.info(response.data.message)
     } catch (err) {
         const error = err as AxiosError<ErrorResponseData>;
         set({
@@ -122,6 +125,7 @@ async deleteReview(id) {
         isLoading: false,
         reviews:state.reviews.filter(review=>review._id !== id)
      }))
+     toast.warning("Review deleted successfully")
     } catch (err) {
         const error = err as AxiosError<ErrorResponseData>;
         set({

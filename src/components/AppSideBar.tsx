@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Settings,MessageSquareQuote } from "lucide-react"
+import { Calendar, Home,MessageSquareQuote } from "lucide-react"
  
 import {
   Sidebar,
@@ -30,11 +30,6 @@ const items = [
     icon: MdDashboard,
   },
   {
-    title: "Inbox",
-    url: "/messages",
-    icon: Inbox,
-  },
-  {
     title: "My Appointments",
     url: "/appointments",
     icon: Calendar,
@@ -48,12 +43,6 @@ const items = [
     title: "Reviews",
     url: "/reviews",
     icon: MessageSquareQuote,
-  },
-
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
   },
 ]
 const AppSideBar = () => {

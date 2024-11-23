@@ -1,5 +1,6 @@
 import { SERVER_URL } from "@/lib/serverurl";
 import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 import { create } from "zustand";
 
 
@@ -48,6 +49,7 @@ export const useBookingStore = create<BookingStore>((set)=> ({
         try {
             const response = await axios.post(`${SERVER_URL}/appointments/create`,{serviceId:id,appointmentDate:date,notes,payment})
             set({isLoading:false,bookings:response.data.appointment})
+            toast.success(response.data.message)
         } catch (err) {
             const error = err as AxiosError<ErrorResponseData>;
         set({
@@ -84,7 +86,7 @@ export const useBookingStore = create<BookingStore>((set)=> ({
                 error: null
             }));
     
-            console.log(response.data.message || 'Appointment deleted successfully');
+            toast.warning(response.data.message || 'Appointment deleted successfully');
         } catch (error) {
             console.error("Error deleting appointment:", error);
             set({ isLoading: false, error: "Failed to delete appointment" });

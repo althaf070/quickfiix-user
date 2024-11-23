@@ -100,12 +100,6 @@ const ServiceDetails = () => {
                   <ServiceBookingForm closeDialog={closeDialog}/>
                 </DialogContent>
               </Dialog>
-              {/* <Button
-                className="ml-4 bg-destructive hover:bg-darkOlive"
-                size={"icon"}
-              >
-                
-              </Button> */}
             </CardFooter>
           </Card>
         </div>
@@ -147,9 +141,6 @@ const ServiceDetails = () => {
               </DialogContent>
             </Dialog> */}
           </div>
-          <h1 className="text-4xl">Ratings & Reviews</h1>
-          <h1 className="text-lg">Total Ratings</h1>
-          <h1 className="text-lg">Average Ratings</h1>
         </div>
         <div className="col-span-2"></div>
       </div>
@@ -195,9 +186,7 @@ const ServiceDetails = () => {
         )}
       </div>
       {/* other similiar provider  */}
-      <h1 className="text-3xl font-semibold text-center mt-4">
-        Other Simialer Service Providers section
-      </h1>
+     
     </>
   );
 };

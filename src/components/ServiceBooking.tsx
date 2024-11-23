@@ -118,7 +118,7 @@ const {id}=useParams()
                 </FormControl>
                 <SelectContent>
                   <SelectItem value="cash">Cash on delivery</SelectItem>
-                  <SelectItem value="online">Online</SelectItem>
+                  <SelectItem value="online" disabled>Online</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

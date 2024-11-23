@@ -2,6 +2,7 @@ import { create } from "zustand";
 import axios, { AxiosError } from "axios";
 import { SERVER_URL } from "@/lib/serverurl";
 import { Services } from "@/lib/types";
+import { toast } from "sonner";
 
 axios.defaults.withCredentials=true
 
@@ -73,6 +74,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         isAuthenticated: true,
         isLoading: false,
       });
+      toast.success(response.data.message);
     } catch (err: unknown) {
       const error = err as AxiosError<ErrorResponseData>;
     
@@ -80,7 +82,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         error: error.response?.data?.message || "Error signing up",
         isLoading: false,
       });
-    
+    toast.error(error.response?.data.message)
       throw error;
     }
   },
@@ -97,6 +99,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         isAuthenticated: true,
         isLoading: false,
       });
+      toast.success(response.data.message);
     } catch (err: unknown) {
       const error = err as AxiosError<ErrorResponseData>;
     
@@ -104,7 +107,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         error: error.response?.data?.message || "Error logging in",
         isLoading: false,
       });
-    
+      toast.error(error.response?.data.message)
       throw error;
     }
     
@@ -116,6 +119,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       await axios.post(`${SERVER_URL}/auth/logout`)
       set({user:null,isAuthenticated:false,isLoading:false})
+      toast.warning("Logout was successful")
     } catch (error) {
       set({error:"Error logging out",isLoading:false})
       throw error
